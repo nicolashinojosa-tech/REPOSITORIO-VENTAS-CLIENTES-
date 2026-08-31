@@ -1,0 +1,62 @@
+{
+	"name": "df_productos",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "productos_csv",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "prodcutos_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {ID_PRODUCTO;PRODUCTO;PRECIO;STOCK} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 sort(asc(ERROR_FUNCTION(''), true)) ~> sort1",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_PRODUCTO as string,",
+				"          PRODUCTO as string,",
+				"          PRECIO as string,",
+				"          STOCK as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_PRODUCTO = {ID_PRODUCTO;PRODUCTO;PRECIO;STOCK},",
+				"          PRODUCTO = {ID_PRODUCTO;PRODUCTO;PRECIO;STOCK},",
+				"          PRECIO = {ID_PRODUCTO;PRODUCTO;PRECIO;STOCK},",
+				"          STOCK = {ID_PRODUCTO;PRODUCTO;PRECIO;STOCK}",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
