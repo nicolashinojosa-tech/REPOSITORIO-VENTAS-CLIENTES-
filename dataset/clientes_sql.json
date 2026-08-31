@@ -1,0 +1,37 @@
+{
+	"name": "clientes_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lssql_xdnose",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_CLIENTE",
+				"type": "varchar"
+			},
+			{
+				"name": "CI_NIT",
+				"type": "varchar"
+			},
+			{
+				"name": "NOMBRE",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA_NAC",
+				"type": "varchar"
+			},
+			{
+				"name": "GENERO",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CLIENTES"
+		}
+	}
+}
